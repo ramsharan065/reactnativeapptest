@@ -38,13 +38,18 @@ const App: () => Node = () => {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
   };
   const [config, setConfig] = React.useState(
-    { "url": null, "isStorageEnabled": false, "html": null, "allowedList": null}
+    { "source": null, "isStorageEnabled": false, "html": null, "allowedList": null}
     );
   const [isEnabled, setIsEnabled] = React.useState(false);
   const [url, onUrlChange] = React.useState("");
+  const [htmlValue, onHtmlChange] = React.useState("");
 
   const loadConfig = () => {
-    setConfig({"url":url, "isStorageEnabled": isEnabled});
+    if(url){
+      setConfig({"source":{uri:url}, "isStorageEnabled": isEnabled});
+    }else if(htmlValue){
+      setConfig({"source":{html:htmlValue}, "isStorageEnabled": isEnabled});
+    }
   }
 
 
@@ -56,6 +61,14 @@ const App: () => Node = () => {
               multiline
               style={styles.input}
               onChangeText={onUrlChange}
+              selectTextOnFocus={true}
+            />
+            <Text>Html</Text>
+            <TextInput
+              // multiline
+              style={styles.input}
+              onChangeText={onHtmlChange}
+              selectTextOnFocus={true}
             />
             <Text>domStorageEnabled</Text>
             <Switch
@@ -68,17 +81,21 @@ const App: () => Node = () => {
               onPress={()=>loadConfig()}
             />
         </View>
+        <ScrollView>
         <View style={styles.view}>
           <WebView
             incognito
             // source={{html: html}}
-            source={{uri: config.url}}
+            source={config.source}
             originWhitelist={['*']}
             javaScriptEnabled={true}
             domStorageEnabled={config.isStorageEnabled}
             startInLoadingState={true}
+            scrollEnabled = {true}
+            style={{height:1000}}
           />
         </View>
+        </ScrollView>
     </SafeAreaView>
 
   );
@@ -90,7 +107,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
   },
   view:{
-    height:400
+    height:1000
   }
 });
 
