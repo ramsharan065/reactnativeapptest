@@ -37,8 +37,9 @@ const App: () => Node = () => {
   const backgroundStyle = {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
   };
-  const [config, setConfig] = React.useState({"url":"", "isStorageEnabled":false});
-  const toggleSwitch = () => setIsEnabled(previousState => !previousState);
+  const [config, setConfig] = React.useState(
+    { "url": null, "isStorageEnabled": false, "html": null, "allowedList": null}
+    );
   const [isEnabled, setIsEnabled] = React.useState(false);
   const [url, onUrlChange] = React.useState("");
 
@@ -59,7 +60,7 @@ const App: () => Node = () => {
             <Text>domStorageEnabled</Text>
             <Switch
               style={styles.switch}
-              onValueChange={toggleSwitch}
+              onValueChange={setIsEnabled}
               value={isEnabled}  
             />
             <Button
