@@ -91,8 +91,6 @@ const App: () => Node = () => {
             javaScriptEnabled={true}
             domStorageEnabled={config.isStorageEnabled}
             startInLoadingState={true}
-            scrollEnabled = {true}
-            style={{height:1000}}
           />
         </View>
         </ScrollView>
@@ -107,7 +105,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
   },
   view:{
-    height:1000
+    height:500
   }
 });
 
